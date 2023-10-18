@@ -1,10 +1,11 @@
 package com.project.web.repository;
 
-import com.project.web.entity.MemberEntity;
+import com.project.web.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
-public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
-    Optional<MemberEntity> findByMemberEmail(String memberEmail);
+@Transactional
+public interface MemberRepository extends JpaRepository<Member, Long> {
+    Optional<Member> findByEmail(String email);
 }
