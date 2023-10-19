@@ -1,6 +1,5 @@
 package com.project.web.controller;
 
-import com.project.web.dto.MemberDto;
 import com.project.web.dto.SignRequest;
 import com.project.web.dto.SignResponse;
 import com.project.web.security.TokenDto;
@@ -28,7 +27,7 @@ public class SignController {
 
     @GetMapping("/user/get")
     public ResponseEntity<SignResponse> getUser(@RequestParam String email) throws Exception {
-        return new ResponseEntity<>(memberService.getMember(email), HttpStatus.OK);
+        return new ResponseEntity<>(memberService.findByEmail(email), HttpStatus.OK);
     }
 
     @GetMapping("/refresh")

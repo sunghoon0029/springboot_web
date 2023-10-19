@@ -1,6 +1,5 @@
 package com.project.web.sevice;
 
-import com.project.web.dto.MemberDto;
 import com.project.web.dto.SignRequest;
 import com.project.web.dto.SignResponse;
 import com.project.web.entity.Authority;
@@ -58,6 +57,8 @@ public class SignService {
                 .id(member.getId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
+                .createTime(member.getCreatedTime())
+                .updateTime(member.getUpdatedTime())
                 .roles(member.getRoles())
                 .token(TokenDto.builder()
                         .accessToken(jwtProvider.createToken(member.getEmail(), member.getRoles()))
@@ -66,7 +67,7 @@ public class SignService {
                 .build();
     }
 
-    public SignResponse getMember(String email) throws Exception {
+    public SignResponse findByEmail(String email) throws Exception {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new Exception("계정을 찾을 수 없습니다."));
         return new SignResponse(member);

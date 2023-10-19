@@ -9,11 +9,11 @@ import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
-
+@Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@Getter
-public class BaseEntity {
+public class BaseTimeEntity {
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdTime;
