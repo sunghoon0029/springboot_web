@@ -1,4 +1,4 @@
-package com.project.web.dto;
+package com.project.web.dto.response;
 
 import com.project.web.entity.Authority;
 import com.project.web.entity.Member;
@@ -24,9 +24,9 @@ public class SignResponse {
 
     private String nickname;
 
-    private LocalDateTime createTime;
+    private LocalDateTime createdTime;
 
-    private LocalDateTime updateTime;
+    private LocalDateTime updatedTime;
 
     private List<Authority> roles = new ArrayList<>();
 
@@ -36,8 +36,8 @@ public class SignResponse {
         this.id = member.getId();
         this.email = member.getEmail();
         this.nickname = member.getNickname();
-        this.createTime = member.getCreatedTime();
-        this.updateTime = member.getUpdatedTime();
+        this.createdTime = member.getCreatedTime();
+        this.updatedTime = member.getUpdatedTime();
         this.roles = member.getRoles();
     }
 }

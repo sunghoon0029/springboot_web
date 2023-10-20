@@ -1,7 +1,7 @@
 package com.project.web.sevice;
 
-import com.project.web.dto.SignRequest;
-import com.project.web.dto.SignResponse;
+import com.project.web.dto.request.SignRequest;
+import com.project.web.dto.response.SignResponse;
 import com.project.web.entity.Authority;
 import com.project.web.entity.Member;
 import com.project.web.repository.MemberRepository;
@@ -57,8 +57,8 @@ public class SignService {
                 .id(member.getId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
-                .createTime(member.getCreatedTime())
-                .updateTime(member.getUpdatedTime())
+                .createdTime(member.getCreatedTime())
+                .updatedTime(member.getUpdatedTime())
                 .roles(member.getRoles())
                 .token(TokenDto.builder()
                         .accessToken(jwtProvider.createToken(member.getEmail(), member.getRoles()))
