@@ -28,7 +28,7 @@ public class JwtProvider {
 
     private Key key;
 
-    private long exp = 30 * 60 * 1000L;
+    private long exp = 30000 * 60 * 1000L;
 
     @PostConstruct
     protected void init() {

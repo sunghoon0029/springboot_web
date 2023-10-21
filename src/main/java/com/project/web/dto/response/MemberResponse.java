@@ -1,6 +1,7 @@
 package com.project.web.dto.response;
 
 import com.project.web.entity.Authority;
+import com.project.web.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +21,8 @@ public class MemberResponse {
 
     private String email;
 
+    private String password;
+
     private String nickname;
 
     private LocalDateTime createdTime;
@@ -28,12 +31,13 @@ public class MemberResponse {
 
     private List<Authority> roles = new ArrayList<>();
 
-    public MemberResponse(Long id, String email, String nickname, List<Authority> roles, LocalDateTime createdTime, LocalDateTime updatedTime) {
-        this.id = getId();
-        this.email = getEmail();
-        this.nickname = getNickname();
-        this.createdTime = getCreatedTime();
-        this.updatedTime = getUpdatedTime();
-        this.roles = getRoles();
+    public MemberResponse(Member member) {
+        this.id = member.getId();
+        this.email = member.getEmail();
+        this.password = member.getPassword();
+        this.nickname = member.getNickname();
+        this.createdTime = member.getCreatedTime();
+        this.updatedTime = member.getUpdatedTime();
+        this.roles = member.getRoles();
     }
 }

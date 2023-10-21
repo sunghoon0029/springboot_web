@@ -22,11 +22,6 @@ public class BoardController {
         return new ResponseEntity<>(boardService.save(request), HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Boolean> update(@PathVariable Long id, @RequestBody BoardRequest request) throws Exception {
-        return new ResponseEntity<>(boardService.update(id, request), HttpStatus.OK);
-    }
-
     @GetMapping("/")
     public List<BoardResponse> findAll() {
         return boardService.findAll();
@@ -35,6 +30,11 @@ public class BoardController {
     @GetMapping("/{id}")
     public ResponseEntity<BoardResponse> findById(@PathVariable Long id) throws Exception {
         return new ResponseEntity<>(boardService.findById(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Boolean> update(@PathVariable Long id, @RequestBody BoardRequest request) throws Exception {
+        return new ResponseEntity<>(boardService.update(id, request), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")

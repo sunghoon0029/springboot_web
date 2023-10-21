@@ -21,17 +21,28 @@ public class MemberService {
         List<MemberResponse> memberResponseList = new ArrayList<>();
 
         for (Member member: memberList) {
-
             MemberResponse memberResponse = new MemberResponse(
                     member.getId(),
                     member.getEmail(),
+                    member.getPassword(),
                     member.getNickname(),
-                    member.getRoles(),
                     member.getCreatedTime(),
-                    member.getUpdatedTime()
+                    member.getUpdatedTime(),
+                    member.getRoles()
             );
             memberResponseList.add(memberResponse);
         }
         return memberResponseList;
+    }
+
+    public MemberResponse findById(Long id) throws Exception{
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new Exception("사용자를 찾을 수 없습니다."));
+        return new MemberResponse(member);
+    }
+
+    public boolean deleteById(Long id) {
+        memberRepository.deleteById(id);
+        return true;
     }
 }

@@ -22,22 +22,6 @@ public class BoardService {
         return true;
     }
 
-    public boolean update(@PathVariable Long id,  BoardRequest request) throws Exception{
-        Board board = boardRepository.findById(id)
-                .orElseThrow(() -> new Exception("게시글을 찾을 수 없습니다"));
-
-        board.updateBoard(request.getWriter()
-        ,request.getTitle()
-        ,request.getContents());
-
-        try {
-            boardRepository.save(board);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-
     public List<BoardResponse> findAll() {
 
         List<Board> boardList = boardRepository.findAll();
@@ -61,6 +45,22 @@ public class BoardService {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new Exception("게시글을 찾을 수 없습니다."));
         return new BoardResponse(board);
+    }
+
+    public boolean update(@PathVariable Long id,  BoardRequest request) throws Exception{
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new Exception("게시글을 찾을 수 없습니다"));
+
+        board.updateBoard(request.getWriter(),
+                request.getTitle(),
+                request.getContents());
+
+        try {
+            boardRepository.save(board);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     public boolean deleteById(Long id) {
