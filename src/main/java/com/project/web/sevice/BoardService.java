@@ -47,7 +47,7 @@ public class BoardService {
         return new BoardResponse(board);
     }
 
-    public boolean update(@PathVariable Long id,  BoardRequest request) throws Exception{
+    public boolean update(Long id,  BoardRequest request) throws Exception{
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new Exception("게시글을 찾을 수 없습니다"));
 
