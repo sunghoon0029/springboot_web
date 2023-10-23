@@ -3,10 +3,10 @@ package com.project.web.sevice;
 import com.project.web.dto.request.BoardRequest;
 import com.project.web.dto.response.BoardResponse;
 import com.project.web.entity.Board;
+import com.project.web.repository.BoardFileRepository;
 import com.project.web.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final BoardFileRepository boardFileRepository;
 
     public boolean save(BoardRequest request) {
         boardRepository.save(request.toEntity(request));

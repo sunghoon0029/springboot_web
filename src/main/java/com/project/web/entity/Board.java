@@ -1,11 +1,14 @@
 package com.project.web.entity;
 
+import com.project.web.dto.request.BoardRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +30,18 @@ public class Board extends BaseTimeEntity {
 
     @Column
     private String contents;
+
+    @Column
+    private int hits;
+
+    @Column
+    private int fileAttached;
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<BoardFile> boardFileList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
     public void updateBoard(String writer, String title, String contents) {
         this.writer = writer;

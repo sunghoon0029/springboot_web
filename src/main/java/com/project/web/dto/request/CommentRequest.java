@@ -1,5 +1,6 @@
 package com.project.web.dto.request;
 
+import com.project.web.entity.Board;
 import com.project.web.entity.Comment;
 import lombok.Getter;
 import lombok.Setter;

@@ -30,7 +30,7 @@ public class Member extends BaseTimeEntity {
     @Column
     private String nickname;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Authority> roles = new ArrayList<>();
 

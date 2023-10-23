@@ -7,7 +7,6 @@ import com.project.web.repository.BoardRepository;
 import com.project.web.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;

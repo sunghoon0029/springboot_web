@@ -1,14 +1,16 @@
 package com.project.web.dto.response;
 
 import com.project.web.entity.Board;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.project.web.entity.BoardFile;
+import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,16 +24,63 @@ public class BoardResponse {
 
     private String contents;
 
+    private int hits;
+
     private LocalDateTime createdTime;
 
     private LocalDateTime updatedTime;
+
+
+    private List<MultipartFile> file;
+
+    private List<String> originalFileName;
+
+    private List<String> storedFileName;
+
+    private int fileAttached;
 
     public BoardResponse(Board board) {
         this.id = board.getId();
         this.writer = board.getWriter();
         this.title = board.getTitle();
         this.contents = board.getContents();
+        this.hits = board.getHits();
         this.createdTime = board.getCreatedTime();
         this.updatedTime = board.getUpdatedTime();
+        this.fileAttached = board.getFileAttached();
+    }
+
+    public BoardResponse(Long id, String writer, String title, String contents, LocalDateTime createdTime, LocalDateTime updatedTime) {
+        this.id = id;
+        this.writer = writer;
+        this.title = title;
+        this.contents = contents;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
+    }
+
+    public static BoardResponse toDTO(Board board) {
+        BoardResponse boardResponse = new BoardResponse();
+        boardResponse.setId(board.getId());
+        boardResponse.setWriter(board.getWriter());
+        boardResponse.setTitle(board.getTitle());
+        boardResponse.setContents(board.getContents());
+        boardResponse.setHits(board.getHits());
+        boardResponse.setCreatedTime(board.getCreatedTime());
+        boardResponse.setUpdatedTime(board.getUpdatedTime());
+        if (board.getFileAttached() == 0) {
+            boardResponse.setFileAttached(board.getFileAttached());
+        } else {
+            List<String> originalFileNameList = new ArrayList<>();
+            List<String> storedFileNameList = new ArrayList<>();
+            boardResponse.setFileAttached(board.getFileAttached());
+            for (BoardFile boardFile: board.getBoardFileList()) {
+                originalFileNameList.add(boardFile.getOriginalFileName());
+                storedFileNameList.add(boardFile.getStoredFileName());
+            }
+            boardResponse.setOriginalFileName(originalFileNameList);
+            boardResponse.setStoredFileName(storedFileNameList);
+        }
+        return boardResponse;
     }
 }
