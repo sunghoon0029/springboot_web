@@ -1,6 +1,5 @@
 package com.project.web.dto.response;
 
-import com.project.web.entity.Board;
 import com.project.web.entity.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

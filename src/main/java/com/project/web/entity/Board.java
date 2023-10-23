@@ -1,6 +1,5 @@
 package com.project.web.entity;
 
-import com.project.web.dto.request.BoardRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
