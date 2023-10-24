@@ -50,15 +50,6 @@ public class BoardResponse {
         this.fileAttached = board.getFileAttached();
     }
 
-    public BoardResponse(Long id, String writer, String title, String contents, LocalDateTime createdTime, LocalDateTime updatedTime) {
-        this.id = id;
-        this.writer = writer;
-        this.title = title;
-        this.contents = contents;
-        this.createdTime = createdTime;
-        this.updatedTime = updatedTime;
-    }
-
     public static BoardResponse toDTO(Board board) {
         BoardResponse boardResponse = new BoardResponse();
         boardResponse.setId(board.getId());

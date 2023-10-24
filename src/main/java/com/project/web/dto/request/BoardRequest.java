@@ -2,10 +2,11 @@ package com.project.web.dto.request;
 
 import com.project.web.entity.Board;
 import lombok.Getter;
-import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Getter
-@Setter
 public class BoardRequest {
 
     private Long id;
@@ -16,12 +17,24 @@ public class BoardRequest {
 
     private String contents;
 
-    public static Board toEntity(BoardRequest request) {
+    private List<MultipartFile> file;
+
+    public Board toEntity() {
         return Board.builder()
-                .id(request.getId())
-                .writer(request.getWriter())
-                .title(request.getTitle())
-                .contents(request.getContents())
+                .id(id)
+                .writer(writer)
+                .title(title)
+                .contents(contents)
+                .build();
+    }
+
+    public Board toSaveFileEntity() {
+        return Board.builder()
+                .writer(writer)
+                .title(title)
+                .contents(contents)
+                .hits(0)
+                .fileAttached(1)
                 .build();
     }
 }

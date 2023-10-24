@@ -40,7 +40,7 @@ public class Board extends BaseTimeEntity {
     private List<BoardFile> boardFileList = new ArrayList<>();
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+    private List<Comment> commentList = new ArrayList<>();
 
     public void updateBoard(String writer, String title, String contents) {
         this.writer = writer;
