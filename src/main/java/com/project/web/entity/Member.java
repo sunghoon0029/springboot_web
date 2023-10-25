@@ -38,4 +38,10 @@ public class Member extends BaseTimeEntity {
         this.roles = role;
         role.forEach(o -> o.setMember(this));
     }
+
+    public void updateMember(String email, String password, String nickname) {
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+    }
 }

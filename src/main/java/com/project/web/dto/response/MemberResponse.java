@@ -2,16 +2,14 @@ package com.project.web.dto.response;
 
 import com.project.web.entity.Authority;
 import com.project.web.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,5 +37,17 @@ public class MemberResponse {
         this.createdTime = member.getCreatedTime();
         this.updatedTime = member.getUpdatedTime();
         this.roles = member.getRoles();
+    }
+
+    public static MemberResponse toDTO(Member member) {
+        MemberResponse memberResponse = new MemberResponse();
+        memberResponse.setId(member.getId());
+        memberResponse.setEmail(member.getEmail());
+        memberResponse.setPassword(member.getPassword());
+        memberResponse.setNickname(member.getNickname());
+        memberResponse.setCreatedTime(member.getCreatedTime());
+        memberResponse.setUpdatedTime(member.getUpdatedTime());
+        memberResponse.setRoles(member.getRoles());
+        return memberResponse;
     }
 }

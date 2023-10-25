@@ -19,7 +19,7 @@ public class BoardRequest {
 
     private List<MultipartFile> file;
 
-    public Board toEntity() {
+    public Board toSaveEntity() {
         return Board.builder()
                 .id(id)
                 .writer(writer)

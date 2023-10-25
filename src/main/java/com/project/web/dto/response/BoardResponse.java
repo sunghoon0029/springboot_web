@@ -2,6 +2,7 @@ package com.project.web.dto.response;
 
 import com.project.web.entity.Board;
 import com.project.web.entity.BoardFile;
+import com.project.web.entity.Comment;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,6 +39,9 @@ public class BoardResponse {
     private List<String> storedFileName;
 
     private int fileAttached;
+
+
+    private List<Comment> comments = new ArrayList<>();
 
     public BoardResponse(Board board) {
         this.id = board.getId();

@@ -1,5 +1,6 @@
 package com.project.web.entity;
 
+import com.project.web.dto.request.CommentRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

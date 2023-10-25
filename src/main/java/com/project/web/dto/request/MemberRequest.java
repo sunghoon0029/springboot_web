@@ -3,7 +3,7 @@ package com.project.web.dto.request;
 import lombok.Getter;
 
 @Getter
-public class SignRequest {
+public class MemberRequest {
 
     private Long id;
 

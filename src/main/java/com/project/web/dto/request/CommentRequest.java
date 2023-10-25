@@ -1,11 +1,10 @@
 package com.project.web.dto.request;
 
+import com.project.web.entity.Board;
 import com.project.web.entity.Comment;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class CommentRequest {
 
     private Long id;
@@ -14,11 +13,14 @@ public class CommentRequest {
 
     private String contents;
 
-    public static Comment toEntity(CommentRequest request) {
+    private Long board;
+
+    public Comment toSaveEntity(CommentRequest request, Board board) {
         return Comment.builder()
-                .id(request.getId())
-                .writer(request.getWriter())
-                .contents(request.getContents())
+                .id(request.id)
+                .writer(request.writer)
+                .contents(request.contents)
+                .board(board)
                 .build();
     }
 }
