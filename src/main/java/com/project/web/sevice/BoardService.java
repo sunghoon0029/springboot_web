@@ -27,7 +27,7 @@ public class BoardService {
 
         if (request.getFile() == null) {
 
-            Board board = request.toEntity();
+            Board board = request.toSaveEntity();
             boardRepository.save(board);
         } else {
 

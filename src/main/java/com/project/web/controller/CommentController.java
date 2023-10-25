@@ -33,6 +33,11 @@ public class CommentController {
         return new ResponseEntity<>(commentService.findById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/board/{id}")
+    public List<CommentResponse> findAllByBoard(@PathVariable Long id) {
+        return commentService.findAllByBoard(id);
+    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<Boolean> update(@PathVariable Long id, @RequestBody CommentRequest request) throws Exception {
         return new ResponseEntity<>(commentService.update(id, request), HttpStatus.OK);

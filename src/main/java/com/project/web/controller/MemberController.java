@@ -1,5 +1,6 @@
 package com.project.web.controller;
 
+import com.project.web.dto.request.MemberRequest;
 import com.project.web.dto.response.MemberResponse;
 import com.project.web.sevice.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,11 @@ public class MemberController {
     @GetMapping("/{id}")
     public ResponseEntity<MemberResponse> findById(@PathVariable Long id) throws Exception {
         return new ResponseEntity<>(memberService.findById(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Boolean> update(@PathVariable Long id, @RequestBody MemberRequest request) throws Exception {
+        return new ResponseEntity<>(memberService.update(id, request), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

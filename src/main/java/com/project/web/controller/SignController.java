@@ -16,22 +16,22 @@ public class SignController {
     private final SignService memberService;
 
     @PostMapping("/join")
-    public ResponseEntity<Boolean> signup(@RequestBody SignRequest request) throws Exception {
+    public ResponseEntity<Boolean> join(@RequestBody SignRequest request) throws Exception {
         return new ResponseEntity<>(memberService.join(request), HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<SignResponse> signin(@RequestBody SignRequest request) throws Exception {
+    public ResponseEntity<SignResponse> login(@RequestBody SignRequest request) throws Exception {
         return new ResponseEntity<>(memberService.login(request), HttpStatus.OK);
     }
 
     @GetMapping("/user/get")
-    public ResponseEntity<SignResponse> getUser(@RequestParam String email) throws Exception {
+    public ResponseEntity<SignResponse> findByEmail(@RequestParam String email) throws Exception {
         return new ResponseEntity<>(memberService.findByEmail(email), HttpStatus.OK);
     }
 
     @GetMapping("/refresh")
-    public ResponseEntity<TokenDto> refresh(@RequestBody TokenDto token) throws Exception {
+    public ResponseEntity<TokenDto> refreshAccessToken(@RequestBody TokenDto token) throws Exception {
         return new ResponseEntity<>(memberService.refreshAccessToken(token), HttpStatus.OK);
     }
 }
