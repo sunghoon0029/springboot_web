@@ -17,7 +17,6 @@ public class CommentController {
 
     private final CommentService commentService;
 
-
     @PostMapping("/save")
     public ResponseEntity<Boolean> save(@RequestBody CommentRequest request) throws Exception {
         return new ResponseEntity<>(commentService.save(request), HttpStatus.OK);
@@ -47,18 +46,4 @@ public class CommentController {
     public ResponseEntity<Boolean> deleteById(@PathVariable Long id) throws Exception {
         return new ResponseEntity<>(commentService.deleteById(id), HttpStatus.OK);
     }
-
-
-//    // ThymeLeaf
-//    @PostMapping("/save")
-//    public ResponseEntity save(@ModelAttribute CommentDTO commentDTO) {
-//        System.out.println("commentDTO = " + commentDTO);
-//        Long saveResult = commentService.save(commentDTO);
-//        if (saveResult != null) {
-//            List<CommentDTO> commentDTOList = commentService.findAll(commentDTO.getBoardId());
-//            return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
-//        }
-//    }
 }

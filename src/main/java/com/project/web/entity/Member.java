@@ -34,6 +34,9 @@ public class Member extends BaseTimeEntity {
     @Builder.Default
     private List<Authority> roles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Board> boards = new ArrayList<>();
+
     public void setRoles(List<Authority> role) {
         this.roles = role;
         role.forEach(o -> o.setMember(this));

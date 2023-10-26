@@ -41,6 +41,7 @@ public class CommentService {
     public CommentResponse findById(Long id) throws Exception {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new Exception("댓글을 찾을 수 없습니다."));
+
         return new CommentResponse(comment);
     }
 
@@ -70,6 +71,7 @@ public class CommentService {
 
     public boolean deleteById(Long id) {
         commentRepository.deleteById(id);
+
         return true;
     }
 }

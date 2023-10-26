@@ -1,5 +1,6 @@
 package com.project.web.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,10 +38,15 @@ public class Board extends BaseTimeEntity {
     private int fileAttached;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<BoardFile> boardFileList = new ArrayList<>();
+    private List<BoardFile> boardFiles = new ArrayList<>();
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Comment> commentList = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member")
+    @JsonIgnore
+    private Member member;
 
     public void updateBoard(String writer, String title, String contents) {
         this.writer = writer;

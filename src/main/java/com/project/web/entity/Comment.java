@@ -1,6 +1,6 @@
 package com.project.web.entity;
 
-import com.project.web.dto.request.CommentRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +28,7 @@ public class Comment extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board")
+    @JsonIgnore
     private Board board;
 
     public void updateComment(String writer, String contents) {

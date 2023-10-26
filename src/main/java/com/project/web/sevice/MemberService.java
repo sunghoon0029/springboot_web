@@ -2,6 +2,7 @@ package com.project.web.sevice;
 
 import com.project.web.dto.request.MemberRequest;
 import com.project.web.dto.response.MemberResponse;
+import com.project.web.entity.Board;
 import com.project.web.entity.Member;
 import com.project.web.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +20,13 @@ public class MemberService {
     public final PasswordEncoder passwordEncoder;
 
     public List<MemberResponse> findAll() {
-
         List<Member> memberList = memberRepository.findAll();
         List<MemberResponse> memberResponseList = new ArrayList<>();
 
         for (Member member: memberList) {
+            List<Board> boards = member.getBoards();
 
-            memberResponseList.add(MemberResponse.toDTO(member));
+            memberResponseList.add(MemberResponse.toDTO(member, boards));
         }
         return memberResponseList;
     }
@@ -33,6 +34,7 @@ public class MemberService {
     public MemberResponse findById(Long id) throws Exception{
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new Exception("사용자를 찾을 수 없습니다."));
+
         return new MemberResponse(member);
     }
 
@@ -51,6 +53,7 @@ public class MemberService {
 
     public boolean deleteById(Long id) {
         memberRepository.deleteById(id);
+
         return true;
     }
 }

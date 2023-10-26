@@ -54,7 +54,15 @@ public class BoardResponse {
         this.fileAttached = board.getFileAttached();
     }
 
-    public static BoardResponse toDTO(Board board) {
+    public BoardResponse(Long id, String writer, String title, int hits, LocalDateTime createdTime) {
+        this.id = id;
+        this.writer = writer;
+        this.title = title;
+        this.hits = hits;
+        this.createdTime = createdTime;
+    }
+
+    public static BoardResponse toDTO(Board board, List<Comment> comments) {
         BoardResponse boardResponse = new BoardResponse();
         boardResponse.setId(board.getId());
         boardResponse.setWriter(board.getWriter());
@@ -69,13 +77,14 @@ public class BoardResponse {
             List<String> originalFileNameList = new ArrayList<>();
             List<String> storedFileNameList = new ArrayList<>();
             boardResponse.setFileAttached(board.getFileAttached());
-            for (BoardFile boardFile: board.getBoardFileList()) {
+            for (BoardFile boardFile: board.getBoardFiles()) {
                 originalFileNameList.add(boardFile.getOriginalFileName());
                 storedFileNameList.add(boardFile.getStoredFileName());
             }
             boardResponse.setOriginalFileName(originalFileNameList);
             boardResponse.setStoredFileName(storedFileNameList);
         }
+        boardResponse.setComments(comments);
         return boardResponse;
     }
 }

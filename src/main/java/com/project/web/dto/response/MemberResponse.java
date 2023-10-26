@@ -1,6 +1,7 @@
 package com.project.web.dto.response;
 
 import com.project.web.entity.Authority;
+import com.project.web.entity.Board;
 import com.project.web.entity.Member;
 import lombok.*;
 
@@ -29,6 +30,8 @@ public class MemberResponse {
 
     private List<Authority> roles = new ArrayList<>();
 
+    private List<Board> boards = new ArrayList<>();
+
     public MemberResponse(Member member) {
         this.id = member.getId();
         this.email = member.getEmail();
@@ -39,7 +42,7 @@ public class MemberResponse {
         this.roles = member.getRoles();
     }
 
-    public static MemberResponse toDTO(Member member) {
+    public static MemberResponse toDTO(Member member, List<Board> boards) {
         MemberResponse memberResponse = new MemberResponse();
         memberResponse.setId(member.getId());
         memberResponse.setEmail(member.getEmail());
@@ -48,6 +51,7 @@ public class MemberResponse {
         memberResponse.setCreatedTime(member.getCreatedTime());
         memberResponse.setUpdatedTime(member.getUpdatedTime());
         memberResponse.setRoles(member.getRoles());
+        memberResponse.setBoards(member.getBoards());
         return memberResponse;
     }
 }

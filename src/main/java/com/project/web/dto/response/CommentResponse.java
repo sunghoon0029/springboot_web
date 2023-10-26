@@ -39,6 +39,7 @@ public class CommentResponse {
         commentResponse.setContents(comment.getContents());
         commentResponse.setCreatedTime(comment.getCreatedTime());
         commentResponse.setUpdatedTime(comment.getUpdatedTime());
+        commentResponse.setBoard(comment.getBoard().getId());
         return commentResponse;
     }
 
