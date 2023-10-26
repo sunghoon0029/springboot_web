@@ -1,4 +1,4 @@
-package com.project.web.sevice;
+package com.project.web.service;
 
 import com.project.web.dto.request.BoardRequest;
 import com.project.web.dto.response.BoardResponse;

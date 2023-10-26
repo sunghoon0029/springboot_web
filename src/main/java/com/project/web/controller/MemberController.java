@@ -2,7 +2,7 @@ package com.project.web.controller;
 
 import com.project.web.dto.request.MemberRequest;
 import com.project.web.dto.response.MemberResponse;
-import com.project.web.sevice.MemberService;
+import com.project.web.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

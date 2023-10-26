@@ -2,7 +2,7 @@ package com.project.web.controller;
 
 import com.project.web.dto.request.BoardRequest;
 import com.project.web.dto.response.BoardResponse;
-import com.project.web.sevice.BoardService;
+import com.project.web.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

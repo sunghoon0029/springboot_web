@@ -2,7 +2,7 @@ package com.project.web.controller;
 
 import com.project.web.dto.request.CommentRequest;
 import com.project.web.dto.response.CommentResponse;
-import com.project.web.sevice.CommentService;
+import com.project.web.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
