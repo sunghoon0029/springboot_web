@@ -2,7 +2,7 @@ package com.project.web.controller;
 
 import com.project.web.dto.request.SignRequest;
 import com.project.web.dto.response.SignResponse;
-import com.project.web.security.TokenDto;
+import com.project.web.security.jwt.TokenDto;
 import com.project.web.sevice.SignService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

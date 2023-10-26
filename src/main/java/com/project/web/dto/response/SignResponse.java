@@ -2,7 +2,7 @@ package com.project.web.dto.response;
 
 import com.project.web.entity.Authority;
 import com.project.web.entity.Member;
-import com.project.web.security.TokenDto;
+import com.project.web.security.jwt.TokenDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -5,10 +5,10 @@ import com.project.web.dto.response.SignResponse;
 import com.project.web.entity.Authority;
 import com.project.web.entity.Member;
 import com.project.web.repository.MemberRepository;
-import com.project.web.security.JwtProvider;
-import com.project.web.security.Token;
-import com.project.web.security.TokenDto;
-import com.project.web.security.TokenRepository;
+import com.project.web.security.jwt.JwtProvider;
+import com.project.web.security.jwt.Token;
+import com.project.web.security.jwt.TokenDto;
+import com.project.web.security.jwt.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,7 +52,6 @@ public class SignService {
         if (!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
             throw new BadCredentialsException("잘못된 계정 정보 입니다.");
         }
-
         return SignResponse.builder()
                 .id(member.getId())
                 .email(member.getEmail())
@@ -70,6 +69,7 @@ public class SignService {
     public SignResponse findByEmail(String email) throws Exception {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new Exception("계정을 찾을 수 없습니다."));
+
         return new SignResponse(member);
     }
 

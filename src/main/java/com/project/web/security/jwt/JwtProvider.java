@@ -1,6 +1,7 @@
-package com.project.web.security;
+package com.project.web.security.jwt;
 
 import com.project.web.entity.Authority;
+import com.project.web.security.CustomUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;

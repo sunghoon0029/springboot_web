@@ -1,7 +1,7 @@
 package com.project.web.config;
 
-import com.project.web.security.JwtAuthenticationFilter;
-import com.project.web.security.JwtProvider;
+import com.project.web.security.jwt.JwtAuthenticationFilter;
+import com.project.web.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

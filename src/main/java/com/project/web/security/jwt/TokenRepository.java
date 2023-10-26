@@ -1,4 +1,4 @@
-package com.project.web.security;
+package com.project.web.security.jwt;
 
 import org.springframework.data.repository.CrudRepository;
 
