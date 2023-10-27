@@ -2,7 +2,7 @@ package com.project.web.dto.response;
 
 import com.project.web.entity.Authority;
 import com.project.web.entity.Member;
-import com.project.web.security.jwt.TokenDto;
+import com.project.web.security.jwt.TokenDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,7 +30,7 @@ public class SignResponse {
 
     private List<Authority> roles = new ArrayList<>();
 
-    private TokenDto token;
+    private TokenDTO token;
 
     public SignResponse(Member member) {
         this.id = member.getId();
