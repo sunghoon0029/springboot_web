@@ -1,8 +1,10 @@
 package com.project.web.security.jwt;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -15,17 +17,22 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
+    private final RedisTemplate redisTemplate;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = jwtProvider.resolveToken(request);
+        String token = jwtProvider.resolveToken((HttpServletRequest) request);
 
         if (token != null && jwtProvider.validateToken(token)) {
-            token = token.split(" ")[1].trim();
-            Authentication auth = jwtProvider.getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(auth);
-        }
 
+            String isBlackList = (String) redisTemplate.opsForValue().get(token);
+
+            if (ObjectUtils.isEmpty(isBlackList)) {
+                token = token.split(" ")[1].trim();
+                Authentication auth = jwtProvider.getAuthentication(token);
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            }
+        }
         filterChain.doFilter(request, response);
     }
 }

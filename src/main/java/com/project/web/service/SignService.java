@@ -7,10 +7,12 @@ import com.project.web.entity.Member;
 import com.project.web.repository.MemberRepository;
 import com.project.web.security.jwt.JwtProvider;
 import com.project.web.security.jwt.Token;
-import com.project.web.security.jwt.TokenDto;
+import com.project.web.security.jwt.TokenDTO;
 import com.project.web.security.jwt.TokenRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +26,10 @@ import java.util.UUID;
 public class SignService {
 
     private final MemberRepository memberRepository;
-    private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TokenRepository tokenRepository;
     private final JwtProvider jwtProvider;
+    private final RedisTemplate redisTemplate;
 
     public boolean join(SignRequest request) throws Exception {
         try {
@@ -52,6 +55,10 @@ public class SignService {
         if (!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
             throw new BadCredentialsException("잘못된 계정 정보 입니다.");
         }
+
+        String token = jwtProvider.createToken(member.getEmail(), member.getRoles());
+        redisTemplate.opsForValue().set("JWT_TOKEN:" + request.getEmail(), token, jwtProvider.getExpiration(token));
+
         return SignResponse.builder()
                 .id(member.getId())
                 .email(member.getEmail())
@@ -59,12 +66,20 @@ public class SignService {
                 .createdTime(member.getCreatedTime())
                 .updatedTime(member.getUpdatedTime())
                 .roles(member.getRoles())
-                .token(TokenDto.builder()
-                        .accessToken(jwtProvider.createToken(member.getEmail(), member.getRoles()))
+                .token(TokenDTO.builder()
+                        .accessToken(token)
                         .refreshToken(createRefreshToken(member))
                         .build())
                 .build();
     }
+
+    public void logout() {
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (redisTemplate.opsForValue().get("JWT_TOKEN:" + member.getEmail()) != null) {
+            redisTemplate.delete("JWT_TOKEN:" + member.getEmail());
+        }
+    }
+
 
     public SignResponse findByEmail(String email) throws Exception {
         Member member = memberRepository.findByEmail(email)
@@ -101,14 +116,14 @@ public class SignService {
         }
     }
 
-    public TokenDto refreshAccessToken(TokenDto token) throws Exception {
+    public TokenDTO refreshAccessToken(TokenDTO token) throws Exception {
         String email = jwtProvider.getEmail(token.getAccessToken());
         Member member = memberRepository.findByEmail(email).orElseThrow(() ->
                 new BadCredentialsException("잘못된 계정 정보 입니다."));
         Token refreshToken = validRefreshToken(member, token.getRefreshToken());
 
         if (refreshToken != null) {
-            return TokenDto.builder()
+            return TokenDTO.builder()
                     .accessToken(jwtProvider.createToken(email, member.getRoles()))
                     .refreshToken(refreshToken.getRefreshToken())
                     .build();
