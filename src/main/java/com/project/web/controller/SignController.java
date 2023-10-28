@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 @RequiredArgsConstructor
 public class SignController {
@@ -23,7 +21,7 @@ public class SignController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<SignResponse> login(@RequestBody SignRequest request) throws Exception {
+    public ResponseEntity<TokenDTO> login(@RequestBody SignRequest request) throws Exception {
         return new ResponseEntity<>(memberService.login(request), HttpStatus.OK);
     }
 
@@ -37,9 +35,9 @@ public class SignController {
         return new ResponseEntity<>(memberService.refreshAccessToken(token), HttpStatus.OK);
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<Void> logout(HttpServletRequest request) throws Exception {
-        memberService.logout();
-        return ResponseEntity.ok().build();
-    }
+//    @PostMapping("/logout")
+//    public ResponseEntity<Void> logout(HttpServletRequest request) throws Exception {
+//        memberService.logout();
+//        return ResponseEntity.ok().build();
+//    }
 }

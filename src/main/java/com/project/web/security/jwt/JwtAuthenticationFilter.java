@@ -25,9 +25,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (token != null && jwtProvider.validateToken(token)) {
 
-            String isBlackList = (String) redisTemplate.opsForValue().get(token);
+            String isLogout = (String) redisTemplate.opsForValue().get(token);
 
-            if (ObjectUtils.isEmpty(isBlackList)) {
+            if (ObjectUtils.isEmpty(isLogout)) {
                 token = token.split(" ")[1].trim();
                 Authentication auth = jwtProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);

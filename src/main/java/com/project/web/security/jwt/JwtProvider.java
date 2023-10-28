@@ -97,7 +97,6 @@ public class JwtProvider {
                 .getExpiration();
 
         long now = new Date().getTime();
-
         return (expiration.getTime() - now);
     }
 }
