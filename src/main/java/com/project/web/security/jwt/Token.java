@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import java.util.concurrent.TimeUnit;
 
 @Getter
-@RedisHash("refreshToken")
+@RedisHash(value = "refreshToken")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

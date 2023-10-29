@@ -12,6 +12,7 @@ import com.project.web.security.jwt.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,9 +58,14 @@ public class SignService {
             throw new BadCredentialsException("잘못된 계정 정보 입니다.");
         }
 
+        String accessToken = jwtProvider.createToken(member.getEmail(), member.getRoles());
+        String refreshToken = createRefreshToken(member);
+
+//        redisTemplate.opsForValue().set("RT:" + member.getEmail(), refreshToken, jwtProvider.getExpiration(refreshToken), TimeUnit.MILLISECONDS);
+
         return TokenDTO.builder()
-                .accessToken(jwtProvider.createToken(member.getEmail(), member.getRoles()))
-                .refreshToken(createRefreshToken(member))
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
@@ -67,8 +73,15 @@ public class SignService {
         if (!jwtProvider.validateToken(tokenDTO.getAccessToken())) {
             throw new Exception("로그아웃 : 유효하지 않은 토큰입니다.");
         }
+
+        Authentication authentication = jwtProvider.getAuthentication(tokenDTO.getAccessToken());
+
+        if (redisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
+            redisTemplate.delete("RT:" + authentication.getName());
+        }
+
         Long expiration = jwtProvider.getExpiration(tokenDTO.getAccessToken());
-        redisTemplate.opsForValue().set(tokenDTO.getAccessToken(), "logout", expiration, TimeUnit.MICROSECONDS);
+        redisTemplate.opsForValue().set(tokenDTO.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
     }
 
     public SignResponse findByEmail(String email) throws Exception {
