@@ -35,7 +35,10 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new Exception("사용자를 찾을 수 없습니다."));
 
-        return new MemberResponse(member);
+        List<Board> boards = member.getBoards();
+        MemberResponse response = MemberResponse.toDTO(member, boards);
+
+        return response;
     }
 
     public boolean update(Long id, MemberRequest request) throws Exception {

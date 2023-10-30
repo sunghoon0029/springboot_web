@@ -51,7 +51,7 @@ public class MemberResponse {
         memberResponse.setCreatedTime(member.getCreatedTime());
         memberResponse.setUpdatedTime(member.getUpdatedTime());
         memberResponse.setRoles(member.getRoles());
-        memberResponse.setBoards(member.getBoards());
+        memberResponse.setBoards(boards);
         return memberResponse;
     }
 }

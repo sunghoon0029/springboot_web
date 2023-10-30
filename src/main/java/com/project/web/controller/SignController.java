@@ -35,9 +35,13 @@ public class SignController {
         return new ResponseEntity<>(memberService.refreshAccessToken(token), HttpStatus.OK);
     }
 
-//    @PostMapping("/logout")
-//    public ResponseEntity<Void> logout(HttpServletRequest request) throws Exception {
-//        memberService.logout();
-//        return ResponseEntity.ok().build();
-//    }
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestParam  String accessToken, @RequestParam String refreshToken) {
+        try {
+            memberService.logout(accessToken, refreshToken);
+            return ResponseEntity.ok("로그아웃 성공");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그아웃 실패" + e.getMessage());
+        }
+    }
 }

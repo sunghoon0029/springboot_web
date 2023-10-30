@@ -58,30 +58,25 @@ public class SignService {
             throw new BadCredentialsException("잘못된 계정 정보 입니다.");
         }
 
-        String accessToken = jwtProvider.createToken(member.getEmail(), member.getRoles());
-        String refreshToken = createRefreshToken(member);
-
-//        redisTemplate.opsForValue().set("RT:" + member.getEmail(), refreshToken, jwtProvider.getExpiration(refreshToken), TimeUnit.MILLISECONDS);
-
         return TokenDTO.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
+                .accessToken(jwtProvider.createToken(member.getEmail(), member.getRoles()))
+                .refreshToken(createRefreshToken(member))
                 .build();
     }
 
-    public void logout(TokenDTO tokenDTO) throws Exception {
-        if (!jwtProvider.validateToken(tokenDTO.getAccessToken())) {
+    public void logout(String accessToken, String refreshToken) throws Exception {
+        if (!jwtProvider.validateToken(accessToken)) {
             throw new Exception("로그아웃 : 유효하지 않은 토큰입니다.");
         }
 
-        Authentication authentication = jwtProvider.getAuthentication(tokenDTO.getAccessToken());
+        Authentication authentication = jwtProvider.getAuthentication(accessToken);
 
-        if (redisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
-            redisTemplate.delete("RT:" + authentication.getName());
+        if (redisTemplate.opsForValue().get(authentication.getName()) != null) {
+            redisTemplate.delete(authentication.getName());
         }
 
-        Long expiration = jwtProvider.getExpiration(tokenDTO.getAccessToken());
-        redisTemplate.opsForValue().set(tokenDTO.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
+        Long expiration = jwtProvider.getExpiration(accessToken);
+        redisTemplate.opsForValue().set(accessToken, "logout", expiration, TimeUnit.MILLISECONDS);
     }
 
     public SignResponse findByEmail(String email) throws Exception {
