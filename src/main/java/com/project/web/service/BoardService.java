@@ -83,9 +83,12 @@ public class BoardService {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new Exception("게시글을 찾을 수 없습니다."));
 
+        List<Comment> comments = board.getComments();
+        BoardResponse response = BoardResponse.toDTO(board, comments);
+
         updateHits(id);
 
-        return new BoardResponse(board);
+        return response;
     }
 
     public boolean update(Long id, BoardRequest request) throws Exception{
